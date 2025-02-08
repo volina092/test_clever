@@ -1,4 +1,4 @@
-name: echo-template
+name: test_project
 
 entryPoint: main.sc
 
@@ -8,6 +8,9 @@ language: ru
 tests:
   include:
     - test.xml
+
+injector:
+  isFailureNow: true 
 
 nlp:
   intentNoMatchThresholds:

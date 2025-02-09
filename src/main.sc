@@ -38,8 +38,8 @@ theme: /
         
         state: Hello
             a: Добро пожаловать, что вас интересует?
-            if: $injector.isFailureNow
-                a: Простите сервис временно не работает
+            if: $injector.isFailureNow || (testMode() && $session.testModeIsFailureNow)
+                a: Простите, сервис временно не работает
                 go!: /CloseSession
             a: <переход в основной сценарий бота>
     

@@ -1,3 +1,51 @@
 <test id = "Тест-кейсы для канала WidGet">
     
+    <test-case id = "isAdult + no auth">
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "widget",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>&lt;переход в основной сценарий бота&gt;</a>
+    </test-case>
+
+    <test-case id = "isAdult + no auth + system failure">
+        <context var = "session">
+            {"testModeIsFailureNow": true}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "widget",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>Простите, сервис временно не работает</a>
+        <a>До свидания</a>
+    </test-case>
+    
 </test>

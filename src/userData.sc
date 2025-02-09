@@ -8,20 +8,19 @@ theme: /Authorization
             a: Укажите вашу фамилию (напишите, пожалуйста, ТОЛЬКО фамилию)
 
             state: GetFName
-                # можно было бы ограничить пользователя: принимать только то, что попадает в сущность pymorphy.surn
+                # можно было бы ограничить пользователя:
+                # принимать только то, что попадает в сущность pymorphy.surn
                 # но туда попадают не все фамилии (Швец не попадает), поэтому я не стала
                 q: * 
                 script: $session.data.client.fname = $request.query;
                 a: Укажите ваше имя
 
                 state: GetName
-                    # можно было бы ограничить пользователя: принимать только то, что попадает в сущность @pymorphy.name
                     q: * @pymorphy.name *
                     script: $session.data.client.name = $parseTree["pymorphy.name"][0]["value"];
                     a: Укажите ваше отчество
                     
                     state: GetSName
-                        # можно было бы ограничить пользователя: принимать только то, что попадает в сущность @pymorphy.patr
                         q: * @pymorphy.patr *
                         script: $session.data.client.sname = $parseTree["pymorphy.patr"][0]["value"];
                         go!: /Authorization/AskFIO
@@ -61,11 +60,9 @@ theme: /Authorization
 
                     state: GetAnswer
                         q: *
-                        # TMP можно вообще не сохранять?
-                        script: $temp.isCodeCorrect = Boolean($nlp.matchPatterns($request.query, ["* " + $session.code + " *"]));
-                        if: $temp.isCodeCorrect
-                            script: sendUserData($injector.sendUserDataUrl, $session.data);
+                        if: Boolean($nlp.matchPatterns($request.query, ["* " + $session.code + " *"]))
                             # отправка данных в систему
+                            script: sendUserData($injector.sendUserDataUrl, $session.data);
                             a: Поздравляю, вы успешно авторизовались
                             go!: /Start/Hello
                         script: $session.askCodeCounter = $session.askCodeCounter + 1 || 1; 

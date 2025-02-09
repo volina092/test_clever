@@ -9,11 +9,11 @@ tests:
   include:
     - telegram.xml
     - whatsApp.xml
-    # - widget.xml
+    - widget.xml
 
 injector:
-  isFailureNow: false
-  sendUserDataUrl: "https://test.url.ru/v0/"
+  isFailureNow: false # есть ли сейчас системный сбой
+  sendUserDataUrl: "https://test.url.ru/v0/" # url для "отправки данных в систему"
 
 nlp:
   intentNoMatchThresholds:

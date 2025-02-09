@@ -7,10 +7,13 @@ language: ru
 
 tests:
   include:
-    - test.xml
+    - telegram.xml
+    - whatsApp.xml
+    # - widget.xml
 
 injector:
-  isFailureNow: true 
+  isFailureNow: false
+  sendUserDataUrl: "https://test.url.ru/v0/"
 
 nlp:
   intentNoMatchThresholds:

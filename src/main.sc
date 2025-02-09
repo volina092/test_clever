@@ -1,6 +1,10 @@
 require: scripts.js
 require: userData.sc
+
 require: patterns.sc
+    module = sys.zb-common
+require: dateTime/dateTime.sc
+    module = sys.zb-common
 
 init:
     $global.$ = {
@@ -16,19 +20,21 @@ theme: /
         script:
             $session.data = $request.data;
             $session.data.channel = parseChannel($.request.data.channel);
-        if: $session.data.client.age < 18
-            a: Простите, сервис доступен только для совершеннолетних.
+        # чтобы, если вдруг данные не пришли, не выпадала ошибка
+        if: $session.data && $session.data.client && $session.data.client.age && $session.data.client.age < 18
+            a: Простите, сервис доступен только для совершеннолетних
             go!: /CloseSession
-        if: $session.data.channel === "wa"
+        if: $session.data.channel === "whatsapp"
             go!: /Operator
-        if: $session.data.channel === "wg"
+        if: $session.data.channel === "widget"
             go!: Hello
-        go!: CheckIsAuth
+        go!: /Start/CheckIsAuth
 
         state: CheckIsAuth
-            if: $session.data.isAuth
-                a: Поздравляю, вы успешно авторизовались
-                go!: /Start/Hello
+            if: !$session.data.isAuth
+                go!: /Authorization/AskFIO
+            a: Поздравляю, вы успешно авторизовались
+            go!: /Start/Hello
         
         state: Hello
             a: Добро пожаловать, что вас интересует?
@@ -47,3 +53,7 @@ theme: /
         script:
             $analytics.setComment("Завершение сессии");
             $jsapi.stopSession();
+
+    state: NoMatch || noContext = true
+        event!: noMatch
+        a: Хм, я вас не понял, попробуйте ещё раз, пожалуйста

@@ -23,7 +23,7 @@
   },
   "intents" : [ ],
   "entities" : [ ],
-  "enabledSystemEntities" : [ "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ],
+  "enabledSystemEntities" : [ "pymorphy.name", "pymorphy.surn", "pymorphy.patr", "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ],
   "spellerDictionary" : [ ],
   "systemEntities" : [ {
     "name" : "mystem.geo",
@@ -57,13 +57,13 @@
     "enabled" : false
   }, {
     "name" : "pymorphy.name",
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "pymorphy.surn",
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "pymorphy.patr",
-    "enabled" : false
+    "enabled" : true
   }, {
     "name" : "pymorphy.geox",
     "enabled" : false

@@ -1,0 +1,45 @@
+<test id = "Тест-кейсы для канала WhatsApp">
+    <test-case id = "wa + isAdult + no auth">
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "WhatsApp",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Перевожу на оператора</a>
+    </test-case>
+
+    <test-case id = "wa + no isAdult + no auth">
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "17"
+                    },
+                    "channel": "WhatsApp",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Простите, сервис доступен только для совершеннолетних</a>
+        <a>До свидания</a>
+    </test-case>
+
+</test>    

@@ -1,0 +1,351 @@
+<test id = "Тест-кейсы для канала телеграм">
+
+    <test-case id = "isAdult + auth">
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": true
+                }
+            }
+        </request>
+        <a>Поздравляю, вы успешно авторизовались</a>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>&lt;переход в основной сценарий бота&gt;</a>
+    </test-case>
+
+    <test-case id = "isAdult + no auth → all data correct → correct code">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Гэндальф Олорин Серый?</a>
+        <q>ага</q>
+        <a>Уточните, ваш возраст — 19?</a>
+        <q>Конечно!</q>
+        <a>Укажите номер телефона</a>
+        <q>88005553535</q>
+        <a>&lt;отправили код (1487) на номер 88005553535&gt;</a>
+        <a>Введите код из СМС</a>
+        <q>1487</q>
+        <a>testMode: удалось отправить данные в систему</a>
+        <a>Поздравляю, вы успешно авторизовались</a>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>&lt;переход в основной сценарий бота&gt;</a>
+    </test-case>
+
+    <test-case id = "once incorrect auth code">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Гэндальф Олорин Серый?</a>
+        <q>ага</q>
+        <a>Уточните, ваш возраст — 19?</a>
+        <q>Конечно!</q>
+        <a>Укажите номер телефона</a>
+        <q>88005553535</q>
+        <a>&lt;отправили код (1487) на номер 88005553535&gt;</a>
+        <a>Введите код из СМС</a>
+        <q>1489</q>
+        <a>Код не совпадает повторите попытку</a>
+        <q>1487</q>
+        <a>testMode: удалось отправить данные в систему</a>
+        <a>Поздравляю, вы успешно авторизовались</a>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>&lt;переход в основной сценарий бота&gt;</a>
+    </test-case>
+
+    <test-case id = "twice incorrect auth code">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Гэндальф Олорин Серый?</a>
+        <q>ага</q>
+        <a>Уточните, ваш возраст — 19?</a>
+        <q>Конечно!</q>
+        <a>Укажите номер телефона</a>
+        <q>88005553535</q>
+        <a>&lt;отправили код (1487) на номер 88005553535&gt;</a>
+        <a>Введите код из СМС</a>
+        <q>1489</q>
+        <a>Код не совпадает повторите попытку</a>
+        <q>А какой тогда?</q>
+        <a>Код не совпадает повторите попытку</a>
+        <q>1487</q>
+        <a>testMode: удалось отправить данные в систему</a>
+        <a>Поздравляю, вы успешно авторизовались</a>
+        <a>Добро пожаловать, что вас интересует?</a>
+        <a>&lt;переход в основной сценарий бота&gt;</a>
+    </test-case>
+
+    <test-case id = "thrice incorrect auth code">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Гэндальф Олорин Серый?</a>
+        <q>ага</q>
+        <a>Уточните, ваш возраст — 19?</a>
+        <q>Конечно!</q>
+        <a>Укажите номер телефона</a>
+        <q>88005553535</q>
+        <a>&lt;отправили код (1487) на номер 88005553535&gt;</a>
+        <a>Введите код из СМС</a>
+        <q>1489</q>
+        <a>Код не совпадает повторите попытку</a>
+        <q>1489</q>
+        <a>Код не совпадает повторите попытку</a>
+        <q>1489</q>
+        <a>Вы не прошли авторизацию, попробуйте позже</a>
+        <a>До свидания</a>
+    </test-case>
+
+    <test-case id = "no auth + enter another name">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Глафира",
+                        "sname": "Аркадиевна",
+                        "fname": "Капец",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Гэндальф",
+                        "sname": "Олорин",
+                        "fname": "Серый",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Гэндальф Олорин Серый?</a>
+        <q>нет</q>
+        <a>Укажите вашу фамилию (напишите, пожалуйста, ТОЛЬКО фамилию)</a>
+        <q>Капец</q>
+        <a>Укажите ваше имя</a>
+        <q>Глафира</q>
+        <a>Укажите ваше отчество</a>
+        <q>Аркадиевна</q>
+        <a>Уточните, ваше ФИО — Глафира Аркадиевна Капец?</a>
+        <q>Всё верно</q>
+        <a>Уточните, ваш возраст — 19?</a>
+    </test-case>
+
+    <test-case id = "no auth + enter another age">
+        <dateTime>2025-02-08 21:30:00</dateTime>
+        <mockData>
+            <query method="post">https://test.url.ru/v0/</query>
+            <body>
+                {
+                    "timestamp": 1739050200000,
+                    "client":
+                    {
+                        "name": "Глафира",
+                        "sname": "Аркадиевна",
+                        "fname": "Капец",
+                        "age": "19"
+                    },
+                    "channel": "telegram"
+                }
+            </body>
+            <response type="json" status="200"></response>
+        </mockData>
+        <context var = "session">
+            {"testModeAuthCode": "1487"}
+        </context>
+        <request>
+            {
+                "query": "/start",
+                "data":
+                {
+                    "client":
+                    {
+                        "name": "Глафира",
+                        "sname": "Аркадиевна",
+                        "fname": "Капец",
+                        "age": "19"
+                    },
+                    "channel": "telegram",
+                    "isAuth": false
+                }
+            }
+        </request>
+        <a>Уточните, ваше ФИО — Глафира Аркадиевна Капец?</a>
+        <q>Всё верно</q>
+        <a>Уточните, ваш возраст — 19?</a>
+        <q>Нет</q>
+        <a>Укажите верный возраст</a>
+        <q>34</q>
+        <a>Уточните, ваш возраст — 34?</a>
+        <q>Ну да</q>
+        <a>Укажите номер телефона</a>
+    </test-case>
+</test>
